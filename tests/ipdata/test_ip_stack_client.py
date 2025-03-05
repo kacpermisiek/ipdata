@@ -3,7 +3,6 @@ from typing import Any
 import furl
 import pytest
 from pydantic import IPvAnyAddress
-from requests import Response
 
 from ipdata.services.ip_client.data import IPData
 from ipdata.services.ip_client.exceptions import IpStackException

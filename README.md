@@ -89,3 +89,4 @@ Note: Please keep in mind that the tests will use the same database as the appli
 - Add more tests
 - Add more IP data clients, for example [ipapi](https://ipapi.com/)
 - Add more endpoints to get geolocation data based on URL
+- Add OAuth2 authentication at create / delete endpoints

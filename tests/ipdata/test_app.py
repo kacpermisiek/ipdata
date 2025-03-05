@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from ipdata.models.ip_data import IPDataModel, LocationModel
 from ipdata.services.ip_client.data import IPData
 from ipdata.services.ip_client.exceptions import IpStackException
-from tests.ipdata.responses import RESPONSE_NO_INFO, RESPONSE_OK, RESPONSE_OK2
+from tests.ipdata.responses import RESPONSE_OK, RESPONSE_OK2
 
 BASIC_IP_ADDRESS = "172.68.213.129"
 
