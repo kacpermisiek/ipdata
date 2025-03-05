@@ -1,6 +1,5 @@
 from http import HTTPStatus
 from typing import Any
-from unittest.mock import patch
 
 import pytest
 from fastapi.testclient import TestClient
@@ -10,8 +9,7 @@ from sqlalchemy.orm import Session
 from ipdata.models.ip_data import IPDataModel, LocationModel
 from ipdata.services.ip_client.data import IPData
 from ipdata.services.ip_client.exceptions import IpStackException
-from ipdata.settings import settings
-from tests.ipdata.responses import RESPONSE_OK, RESPONSE_OK2
+from tests.ipdata.responses import RESPONSE_NO_INFO, RESPONSE_OK, RESPONSE_OK2
 
 BASIC_IP_ADDRESS = "172.68.213.129"
 
@@ -72,14 +70,14 @@ def test_create_ip_data_with_ip_already_exists_in_db_should_raise_error(alice: T
     then_response_should_be(HTTPStatus.BAD_REQUEST, res2)
 
 
-def test_create_ip_data_with_ip_stack_error_should_raise_error(alice: TestClient, mocker):
+def test_create_ip_data_with_ip_no_info_should_raise_bad_request(alice: TestClient, mocker):
     mocker.patch(
         "ipdata.services.ip_client.ip_stack_client.IPStackClient.get_ip_data",
-        side_effect=IpStackException(code=999, err_type="unknown_error", info="Unknown error"),
+        side_effect=IpStackException(code=999, err_type="no_ip_info", info="This IP address does not have any info."),
     )
 
     res = when_user_create_ip_data(alice, ip_address=BASIC_IP_ADDRESS)
-    then_response_should_be(HTTPStatus.BAD_GATEWAY, res)
+    then_response_should_be(HTTPStatus.BAD_REQUEST, res)
 
 
 def test_created_ip_data_record_should_have_proper_values_in_db(db_api: Session, alice, mocker):
@@ -270,7 +268,7 @@ def test_create_ip_data_manually_with_proper_request_body_should_add_ip_to_db(
         "location": {
             "geoname_id": 3067696,
             "capital": "Prague",
-            "languages": ["cs", 'sk'],
+            "languages": ["cs", "sk"],
             "country_flag": "https://assets.ipstack.com/flags/cz.svg",
             "country_flag_emoji": "🇨🇿",
             "country_flag_emoji_unicode": "U+1F1E8 U+1F1FF",

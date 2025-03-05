@@ -5,6 +5,8 @@ WORKDIR /ipdata
 COPY pyproject.toml poetry.lock README.md /ipdata/
 COPY ./ipdata /ipdata/ipdata
 
+COPY ./tests /ipdata/tests
+
 RUN pip install poetry && \
     poetry config virtualenvs.create false && \
     poetry install && \

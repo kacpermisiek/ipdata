@@ -28,17 +28,6 @@ class FakeIPStackClient(IPStackClient):
         return self._determine_response(self._fake_response)
 
 
-class ErrorIPStackClient(IPStackClient):
-    def __init__(self, ip_url: furl, fake_response: Response) -> None:
-        self._response = fake_response
-        super().__init__(ip_url)
-
-    def _fetch_from_api(self, ip: str) -> IPData | IPStackErrorResponse:
-        response = self._response
-        response.raise_for_status()
-        return self._determine_response(response)
-
-
 def test_ip_stack_client_should_return_proper_ipdata_object_if_ip_found() -> None:
     client = FakeIPStackClient(IP_STACK_URL, fake_response=RESPONSE_OK)
     ip_data = client.get_ip_data("ok.ip")

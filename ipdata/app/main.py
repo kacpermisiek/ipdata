@@ -1,13 +1,10 @@
-from http import HTTPStatus
-from http.client import HTTPResponse
-
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI
 from pydantic import IPvAnyAddress
 from sqlalchemy.orm import Session
 
-from ipdata.app.utils import create_ip_data_schema, delete_ip_schema, get_ip_data_schema, create_ip_data_manually_schema
+from ipdata.app.utils import create_ip_data_manually_schema, create_ip_data_schema, delete_ip_schema, get_ip_data_schema
 from ipdata.db import get_db
-from ipdata.schemas.ipdata import IPDataCreateSchema, IPDataReturnSchema, IPDataCreateManuallySchema
+from ipdata.schemas.ipdata import IPDataCreateManuallySchema, IPDataCreateSchema, IPDataReturnSchema
 
 app = FastAPI()
 

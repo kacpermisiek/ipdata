@@ -9,10 +9,10 @@ from sqlalchemy.orm import Session
 
 from ipdata.models.ip_data import IPDataModel, LocationModel
 from ipdata.schemas.ipdata import (
+    IPDataCreateManuallySchema,
     IPDataCreateSchema,
     IPDataReturnSchema,
     LocationDataWithSimpleLanguages,
-    IPDataCreateManuallySchema,
 )
 from ipdata.services.ip_client.data import IPData, LanguagesData, LocationData
 from ipdata.services.ip_client.exceptions import IpStackException
@@ -207,6 +207,8 @@ def get_exception_based_on_status_code(code: int) -> HTTPException:
             return HTTPException(HTTPStatus.BAD_REQUEST, general_msg)
         case 106:  # Invalid IP address or domain
             return HTTPException(HTTPStatus.BAD_REQUEST, "Invalid IP address or domain")
+        case 999:  # No info
+            return HTTPException(HTTPStatus.BAD_REQUEST, "This IP address does not have any info.")
         case _:
             return HTTPException(HTTPStatus.BAD_GATEWAY, general_msg)
 

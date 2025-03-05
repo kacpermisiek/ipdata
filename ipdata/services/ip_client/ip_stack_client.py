@@ -57,16 +57,17 @@ class IPStackClient(BaseIPClient):
         except ValidationError:
             return self._create_error_response(response)
 
-    @staticmethod
-    def _create_error_response(response: dict[str, Any]) -> IPStackErrorResponse:
+    def _create_error_response(self, response: dict[str, Any]) -> IPStackErrorResponse:
         try:
+            self._logger.error(response)
             return IPStackErrorResponse(**response)
         except ValidationError:
+            # This means that the response was successful but the data was not found
             return IPStackErrorResponse(
                 success=False,
                 error=IPStackError(
                     code=999,
-                    type="unknown_error",
-                    info="Unknown error occurred",
+                    type="no_ip_info",
+                    info="This IP address does not have any info.",
                 ),
             )

@@ -1,4 +1,4 @@
-from pydantic import AnyHttpUrl, Field, SecretStr
+from pydantic import AnyHttpUrl, SecretStr
 from pydantic_settings import BaseSettings
 
 

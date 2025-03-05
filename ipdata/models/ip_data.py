@@ -2,16 +2,13 @@ import uuid
 
 from sqlalchemy import (
     BOOLEAN,
-    DATETIME,
     FLOAT,
     INTEGER,
     Column,
     ForeignKey,
-    ForeignKeyConstraint,
     String,
     UniqueConstraint,
 )
-from sqlalchemy.orm import relationship
 from sqlalchemy.types import UUID
 
 from ipdata.db import Base

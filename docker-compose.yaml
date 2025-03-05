@@ -33,6 +33,19 @@ services:
     networks:
       - backend
 
+  pytest:
+    build:
+      context: .
+    profiles:
+      - test
+    entrypoint: ["pytest", "tests/"]
+    environment:
+      - DATABASE_DSN=postgresql://alice:xyz@db:5432/ipdata
+    depends_on:
+      - db
+    networks:
+      - backend
+
 volumes:
   ipdata-pg-data:
 
